@@ -5,17 +5,19 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <a href="{{ route('movie.create') }}" class="btn btn-primary">Thêm Phim</a>
-                <table class="table" id="tablephim">
+                <table class="table table-hover" id="tablephim">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Tên phim</th>
-                            <th scope="col">Tags</th>
+                            <th scope="col">Trailer</th>
+                            {{-- <th scope="col">Tags</th> --}}
                             <th scope="col">Thời lượng phim</th>
                             <th scope="col">Hình ảnh</th>
                             <th scope="col">Phim hot</th>
                             <th scope="col">Định dạng</th>
                             <!-- <th scope="col">Mô tả</th> -->
+                            <th scope="col">Phụ đề</th>
                             <th scope="col">Đường dẫn</th>
                             <th scope="col">Trạng thái</th>
                             <th scope="col">Danh mục</th>
@@ -24,6 +26,7 @@
                             <th scope="col">Ngày tạo</th>
                             <th scope="col">Ngày cập nhật</th>
                             <th scope="col">Năm</th>
+                            <th scope="col">Season</th>
                             <th scope="col">Quản lý</th>
                         </tr>
                     </thead>
@@ -32,7 +35,12 @@
                             <tr>
                                 <th scope="row">{{ $key }}</th>
                                 <td>{{ $cate->title }}</td>
-                                <td>{{ $cate->tags }}</td>
+                                <td>{{ $cate->trailer }}</td>
+                                {{-- <td>
+                                    @if ($cate->tags != null)
+                                        {{ substr($cate->tags, 0, 20) }}...
+                                    @endif
+                                </td> --}}
                                 <td>{{ $cate->thoiluong }}</td>
                                 <td><img width="100" src="{{ asset('uploads/movie/' . $cate->image) }}"></td>
                                 <td>
@@ -53,9 +61,19 @@
                                         CAM
                                     @elseif ($cate->resolution == 4)
                                         FullHD
+                                    @elseif ($cate->resolution == 5)
+                                        Trailer
                                     @endif
                                 </td>
-                                <!-- <td>{{ $cate->description }}</td> -->
+                                <td>
+                                    <form method="POST">
+                                        @csrf
+                                        {!! Form::select('phude', ['0' => 'VietSub', '1' => 'Thuyết minh'], isset($cate->phude) ? $cate->phude : '0', [
+                                            'class' => 'select-phude',
+                                            'id' => $cate->id,
+                                        ]) !!}
+                                    </form>
+                                </td>
                                 <td>{{ $cate->slug }}</td>
                                 <td>
                                     @if ($cate->status)
@@ -74,6 +92,15 @@
                                         'class' => 'select-year',
                                         'id' => $cate->id,
                                     ]) !!}
+                                </td>
+                                <td>
+                                    <form method="POST">
+                                        @csrf
+                                        {!! Form::selectRange('season', 0, 20, isset($cate->season) ? $cate->season : '', [
+                                            'class' => 'select-season',
+                                            'id' => $cate->id,
+                                        ]) !!}
+                                    </form>
                                 </td>
                                 <td>
                                     {!! Form::open([

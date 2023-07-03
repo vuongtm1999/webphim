@@ -101,7 +101,7 @@
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script type="text/javascript" src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script>
-        $('.select-year').change(function(){
+        $('.select-year').change(function() {
             var year = $(this).find(':selected').val();
             var id_phim = $(this).attr('id');
 
@@ -111,9 +111,59 @@
             $.ajax({
                 url: "{{ route('update_year') }}",
                 method: 'GET',
-                data: { year: year, id_phim: id_phim },
+                data: {
+                    year: year,
+                    id_phim: id_phim
+                },
                 success: function() {
-                    alert('Thay đổi năm phim theo năm '+ year +' thành công');
+                    alert('Thay đổi năm phim theo năm ' + year + ' thành công');
+                }
+            });
+        })
+
+        $('.select-season').change(function() {
+            var season = $(this).find(':selected').val();
+            var id_phim = $(this).attr('id');
+
+            // alert(season + " - " + id_phim);
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ url('/update-season-phim') }}",
+                method: 'POST',
+                data: {
+                    season: season,
+                    id_phim: id_phim
+                },
+                success: function() {
+                    alert('Thay đổi năm season phim ' + season + ' thành công');
+                }
+            });
+        })
+
+        $('.select-phude').change(function() {
+            var phude = $(this).find(':selected').val();
+            var id_phim = $(this).attr('id');
+
+            // alert(phude + " - " + id_phim);
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ url('/update-phude-phim') }}",
+                method: 'POST',
+                data: {
+                    phude: phude,
+                    id_phim: id_phim
+                },
+                success: function() {
+                    alert('Thay đổi năm phude phim ' + phude + ' thành công');
+                },
+                error: function(err) {
+                    alert(err.res);
                 }
             });
         })

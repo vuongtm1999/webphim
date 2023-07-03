@@ -48,8 +48,34 @@
                             <a class="halim-thumb" href="{{ route('movie', $hot->slug) }}" title="{{ $hot->title }}">
                                 <figure><img class="lazy img-responsive" src="{{ asset('uploads/movie/' . $hot->image) }}"
                                         alt="{{ $hot->title }}" title="Đại Thánh Vô Song"></figure>
-                                <span class="status">HD</span><span class="episode"><i class="fa fa-play"
-                                        aria-hidden="true"></i>Vietsub</span>
+                                <span class="status">
+                                    @if ($hot->resolution == 0)
+                                        HD
+                                    @elseif ($hot->resolution == 1)
+                                        SD
+                                    @elseif ($hot->resolution == 2)
+                                        HDCam
+                                    @elseif ($hot->resolution == 3)
+                                        CAM
+                                    @elseif ($hot->resolution == 4)
+                                        FullHD
+                                    @elseif ($hot->resolution == 5)
+                                        Trailer
+                                    @endif
+                                </span>
+                                <span class="episode"><i class="fa fa-play" aria-hidden="true"></i>
+                                    @if ($hot->phude == 0)
+                                        Vietsub
+                                        @if ($hot->season != 0)
+                                            - Season {{ $hot->season }}
+                                        @endif
+                                    @else
+                                        Thuyết minh
+                                        @if ($hot->season != 0)
+                                            - Season {{ $hot->season }}
+                                        @endif
+                                    @endif
+                                </span>
                                 <div class="icon_overlay"></div>
                                 <div class="halim-post-title-box">
                                     <div class="halim-post-title ">
@@ -105,7 +131,7 @@
                     </div>
                     <div id="halim-advanced-widget-2-ajax-box" class="halim_box">
                         @foreach ($cate_home->movie->take(12) as $key => $mov)
-                            <article class="col-md-3 col-sm-3 col-xs-6 thumb grid-item post-37606">
+                            <article class="col-md-4 col-sm-3 col-xs-6 thumb grid-item post-37606">
                                 <div class="halim-item">
                                     <a class="halim-thumb" href="{{ route('movie', $mov->slug) }}">
                                         <figure><img class="lazy img-responsive"
@@ -122,10 +148,23 @@
                                                 CAM
                                             @elseif ($mov->resolution == 4)
                                                 FullHD
+                                            @elseif ($mov->resolution == 5)
+                                                Trailer
                                             @endif
                                         </span>
                                         <span class="episode">
-                                            <i class="fa fa-play" aria-hidden="true"></i>Vietsub
+                                            <i class="fa fa-play" aria-hidden="true"></i>
+                                            @if ($mov->phude == 0)
+                                                Vietsub
+                                                @if ($mov->season != 0)
+                                                    - Season {{ $mov->season }}
+                                                @endif
+                                            @else
+                                                Thuyết minh
+                                                @if ($mov->season != 0)
+                                                    - Season {{ $mov->season }}
+                                                @endif
+                                            @endif
                                         </span>
                                         <div class="icon_overlay"></div>
                                         <div class="halim-post-title-box">

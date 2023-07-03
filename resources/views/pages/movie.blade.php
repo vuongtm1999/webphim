@@ -62,13 +62,35 @@
                                                     CAM
                                                 @elseif ($movie->resolution == 4)
                                                     FullHD
+                                                @elseif ($movie->resolution == 5)
+                                                    Trailer
                                                 @endif
                                             </span>
                                         </span>
-                                        <span class="episode">Vietsub</span>
+                                        @if ($movie->resolution != 5)
+                                            <span class="episode">
+                                                <i class="fa fa-play" aria-hidden="true"></i>
+                                                @if ($movie->phude == 0)
+                                                    Vietsub
+                                                    @if ($movie->season != 0)
+                                                        - Season {{ $movie->season }}
+                                                    @endif
+                                                @else
+                                                    Thuyết minh
+                                                    @if ($movie->season != 0)
+                                                        - Season {{ $movie->season }}
+                                                    @endif
+                                                @endif
+                                            </span>
+                                        @endif
                                     </li>
 
                                     <li class="list-info-group-item"><span>Thời lượng</span> : {{ $movie->thoiluong }}</li>
+                                    @if ($movie->season != 0)
+                                        <li class="list-info-group-item"><span>Season</span> :
+                                            {{ $movie->season }}
+                                        </li>
+                                    @endif
                                     <li class="list-info-group-item"><span>Thể loại</span> :
                                         <a href="{{ route('genre', $movie->genre->slug) }}"
                                             rel="category tag">{{ $movie->genre->title }}</a>
@@ -100,6 +122,24 @@
                         </div>
                     </div>
 
+
+                    @if ($movie->trailer)
+                        <div class="section-bar clearfix">
+                            <h2 class="section-title"><span style="color:#ffed4d">Trailer: </span></h2>
+                        </div>
+                        <div class="entry-content htmlwrap clearfix">
+                            <div class="video-item halim-entry-box">
+                                <article id="post-38424" class="item-content">
+                                    <iframe width="100%" height="415"
+                                        src="https://www.youtube.com/embed/{{ $movie->trailer }}"
+                                        title="YouTube video player" frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowfullscreen></iframe>
+                                </article>
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="section-bar clearfix">
                         <h2 class="section-title"><span style="color:#ffed4d">Tags: </span></h2>
                     </div>
@@ -112,10 +152,10 @@
                                         $tags = explode(', ', $movie->tags);
                                     @endphp
                                     @foreach ($tags as $tag)
-                                        <a href="{{ url('tag/'.$tag) }}">{{ $tag }}</a>
+                                        <a href="{{ url('tag/' . $tag) }}">{{ $tag }}</a>
                                     @endforeach
                                 @else
-                                    $movie->title
+                                    {{ $movie->title }}
                                 @endif
                             </article>
                         </div>
@@ -147,11 +187,26 @@
                                                 CAM
                                             @elseif ($mov->resolution == 4)
                                                 FullHD
+                                            @elseif ($mov->resolution == 5)
+                                                Trailer
                                             @endif
                                         </span>
-                                        <span class="episode">
-                                            <i class="fa fa-play" aria-hidden="true"></i>Vietsub
-                                        </span>
+                                        @if ($mov->resolution != 5)
+                                            <span class="episode">
+                                                <i class="fa fa-play" aria-hidden="true"></i>
+                                                @if ($mov->phude == 0)
+                                                    Vietsub
+                                                    @if ($mov->season != 0)
+                                                        - Season {{ $mov->season }}
+                                                    @endif
+                                                @else
+                                                    Thuyết minh
+                                                    @if ($mov->season != 0)
+                                                        - Season {{ $mov->season }}
+                                                    @endif
+                                                @endif
+                                            </span>
+                                        @endif
                                         <div class="icon_overlay"></div>
                                         <div class="halim-post-title-box">
                                             <div class="halim-post-title ">

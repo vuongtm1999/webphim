@@ -41,3 +41,6 @@ Route::resource('episode', EpisodeController::class);
 Route::resource('movie', MovieController::class);
 Route::get('/update-year-phim', [MovieController::class, 'update_year'])->name('update_year');
 Route::get('/filter-top-view-phim', [MovieController::class, 'filter_topview']);
+Route::post('/update-season-phim', [MovieController::class, 'update_season']);
+Route::post('/update-phude-phim', [MovieController::class, 'update_phude']);
+

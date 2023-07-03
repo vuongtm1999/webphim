@@ -24,7 +24,8 @@
                         <article class="col-md-3 col-sm-3 col-xs-6 thumb grid-item post-37606">
                             <div class="halim-item">
                                 <a class="halim-thumb" href="{{ route('movie', $mov->slug) }}">
-                                    <figure><img class="lazy img-responsive" src="{{ asset('uploads/movie/' . $mov->image) }}"
+                                    <figure><img class="lazy img-responsive"
+                                            src="{{ asset('uploads/movie/' . $mov->image) }}"
                                             alt="BẠN CÙNG PHÒNG CỦA TÔI LÀ GUMIHO" title="{{ $mov->title }}"></figure>
                                     <span class="status">
                                         @if ($mov->resolution == 0)
@@ -37,10 +38,23 @@
                                             CAM
                                         @elseif ($mov->resolution == 4)
                                             FullHD
+                                        @elseif ($mov->resolution == 5)
+                                            Trailer
                                         @endif
                                     </span>
                                     <span class="episode">
-                                        <i class="fa fa-play" aria-hidden="true"></i>Vietsub
+                                        <i class="fa fa-play" aria-hidden="true"></i>
+                                        @if ($mov->phude == 0)
+                                            Vietsub
+                                            @if ($mov->season != 0)
+                                                - Season {{ $mov->season }}
+                                            @endif
+                                        @else
+                                            Thuyết minh
+                                            @if ($mov->season != 0)
+                                                - Season {{ $mov->season }}
+                                            @endif
+                                        @endif
                                     </span>
                                     <div class="icon_overlay"></div>
                                     <div class="halim-post-title-box">
@@ -57,13 +71,13 @@
                 <div class="clearfix"></div>
                 <div class="text-center">
                     <!-- <ul class='page-numbers'>
-                            <li><span aria-current="page" class="page-numbers current">1</span></li>
-                            <li><a class="page-numbers" href="">2</a></li>
-                            <li><a class="page-numbers" href="">3</a></li>
-                            <li><span class="page-numbers dots">&hellip;</span></li>
-                            <li><a class="page-numbers" href="">55</a></li>
-                            <li><a class="next page-numbers" href=""><i class="hl-down-open rotate-right"></i></a></li>
-                         </ul> -->
+                                <li><span aria-current="page" class="page-numbers current">1</span></li>
+                                <li><a class="page-numbers" href="">2</a></li>
+                                <li><a class="page-numbers" href="">3</a></li>
+                                <li><span class="page-numbers dots">&hellip;</span></li>
+                                <li><a class="page-numbers" href="">55</a></li>
+                                <li><a class="next page-numbers" href=""><i class="hl-down-open rotate-right"></i></a></li>
+                             </ul> -->
                     {!! $movie->links('pagination::bootstrap-4') !!}
                 </div>
             </section>

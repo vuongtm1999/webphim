@@ -30,6 +30,23 @@ class MovieController extends Controller
         $movie->save();
     }
 
+    public function update_season(Request $request)
+    {
+        $data = $request->all();
+        $movie = Movie::find($data['id_phim']);
+        $movie->season = $data['season'];
+        $movie->save();
+    }
+
+    public function update_phude(Request $request)
+    {
+        $data = $request->all();
+        $movie = Movie::find($data['id_phim']);
+        $movie->phude = $data['phude'];
+        $movie->save();
+    }
+    
+
     public function filter_topview(Request $request)
     {
         $data = $request->all();
@@ -98,7 +115,8 @@ class MovieController extends Controller
         $movie = new Movie();
         $movie->resolution = $data['resolution'];
         $movie->title = $data['title'];
-        $movie->thoiluong = $data['thoiluong'];
+        $movie->title = $data['title'];
+        $movie->trailer = $data['trailer'];
         $movie->slug = $data['slug'];
         $movie->name_eng = $data['name_eng'];
         $movie->phim_hot = $data['phim_hot'];
@@ -163,6 +181,7 @@ class MovieController extends Controller
         $data = $request->all();
         $movie = Movie::find($id);
         $movie->title = $data['title'];
+        $movie->trailer = $data['trailer'];
         $movie->thoiluong = $data['thoiluong'];
         $movie->resolution = $data['resolution'];
         $movie->slug = $data['slug'];

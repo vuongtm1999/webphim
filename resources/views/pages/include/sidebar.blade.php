@@ -26,6 +26,8 @@
                                             CAM
                                         @elseif ($phim->resolution == 4)
                                             FullHD
+                                        @elseif ($phim->resolution == 5)
+                                            Trailer
                                         @endif
                                     </span>
                                 </div>
@@ -67,13 +69,13 @@
         </div>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade active in" id="ngay" role="tabpanel">
-                <span id="show-1"></span>
+                <span id="show-0"></span>
             </div>
             <div class="tab-pane fade" id="thang" role="tabpanel">
-                <span id="show-2"></span>
+                <span id="show-1"></span>
             </div>
             <div class="tab-pane fade" id="nam" role="tabpanel">
-                <span id="show-3"></span>
+                <span id="show-2"></span>
             </div>
         </div>
         {{-- <section class="tab-content">

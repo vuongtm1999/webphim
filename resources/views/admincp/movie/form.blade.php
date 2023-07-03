@@ -28,8 +28,12 @@
                             {!! Form::text('thoiluong', isset($movie) ? $movie->thoiluong : '', ['class'=>'form-control','placeholder'=>'Thời lượng']) !!}
                         </div>
                         <div class="form-group">
-                            {!! Form::label('tên tiếng anh', 'Tên tiếng anh', []) !!}
+                            {!! Form::label('name_eng', 'Tên tiếng anh', []) !!}
                             {!! Form::text('name_eng', isset($movie) ? $movie->name_eng : '', ['class'=>'form-control','placeholder'=>'...']) !!}
+                        </div>
+                        <div class="form-group">
+                            {!! Form::label('trailer', 'Trailer', []) !!}
+                            {!! Form::text('trailer', isset($movie->trailer) ? $movie->trailer : '', ['class'=>'form-control','placeholder'=>'Nhập trailer...']) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('slug', 'Đường dẫn', []) !!}
@@ -49,7 +53,7 @@
                         </div>
                         <div class="form-group">
                             {!! Form::label('resolution', 'Định dạng', []) !!}
-                            {!! Form::select('resolution', ['0'=>'HD','1'=>'SD', '2' => 'HDCam', '3' => 'CAM', '4' => 'FullHD'], isset($movie) ? $movie->resolution : '', ['class'=>'form-control']) !!}
+                            {!! Form::select('resolution', ['0'=>'HD','1'=>'SD', '2' => 'HDCam', '3' => 'CAM', '4' => 'FullHD', '5'=>'Trailer'], isset($movie) ? $movie->resolution : '', ['class'=>'form-control']) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('Category', 'Danh mục', []) !!}

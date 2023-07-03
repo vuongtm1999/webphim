@@ -28,19 +28,32 @@
                                             alt="BẠN CÙNG PHÒNG CỦA TÔI LÀ GUMIHO" title="{{ $mov->title }}"></figure>
                                     <span class="status">
                                         @if ($mov->resolution == 0)
-                                            HD
-                                        @elseif ($mov->resolution == 1)
-                                            SD
-                                        @elseif ($mov->resolution == 2)
-                                            HDCam
-                                        @elseif ($mov->resolution == 3)
-                                            CAM
-                                        @elseif ($mov->resolution == 4)
-                                            FullHD
-                                        @endif
+                                        HD
+                                    @elseif ($mov->resolution == 1)
+                                        SD
+                                    @elseif ($mov->resolution == 2)
+                                        HDCam
+                                    @elseif ($mov->resolution == 3)
+                                        CAM
+                                    @elseif ($mov->resolution == 4)
+                                        FullHD
+                                    @elseif ($mov->resolution == 5)
+                                        Trailer
+                                    @endif
                                     </span>
                                     <span class="episode">
-                                        <i class="fa fa-play" aria-hidden="true"></i>Vietsub
+                                        <i class="fa fa-play" aria-hidden="true"></i>
+                                        @if ($mov->phude == 0)
+                                                Vietsub
+                                                @if ($mov->season != 0)
+                                                    - Season {{ $mov->season }}
+                                                @endif
+                                            @else
+                                                Thuyết minh
+                                                @if ($mov->season != 0)
+                                                    - Season {{ $mov->season }}
+                                                @endif
+                                            @endif
                                     </span>
                                     <div class="icon_overlay"></div>
                                     <div class="halim-post-title-box">
