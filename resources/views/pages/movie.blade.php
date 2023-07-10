@@ -34,13 +34,19 @@
                         <div class="movie_info col-xs-12">
                             <div class="movie-poster col-md-3">
                                 <img class="movie-thumb" src="{{ asset('uploads/movie/' . $movie->image) }}"
-                                    alt="GÓA PHỤ ĐEN">
-                                <div class="bwa-content">
-                                    <div class="loader"></div>
-                                    <a href="{{ route('watch') }}" class="bwac-btn">
-                                        <i class="fa fa-play"></i>
-                                    </a>
-                                </div>
+                                    alt="{{ $movie->title }}">
+                                @if ($movie->resulution != 5 && $movie->resulution != null)
+                                    <div>{{ $movie->resulution }}</div>
+                                    <div class="bwa-content">
+                                        <div class="loader"></div>
+                                        <a href="{{ route('watch') }}" class="bwac-btn">
+                                            <i class="fa fa-play"></i>
+                                        </a>
+                                    </div>
+                                @else
+                                    <a href="#watch-trailer" style="display: block;"
+                                        class="btn btn-primary watch-trailer-btn">Xem trailer phim</a>
+                                @endif
                             </div>
                             <div class="film-poster col-md-9">
                                 <h1 class="movie-title title-1"
@@ -124,12 +130,12 @@
 
 
                     @if ($movie->trailer)
-                        <div class="section-bar clearfix">
+                        <div class="section-bar clearfix" id="watch-trailer">
                             <h2 class="section-title"><span style="color:#ffed4d">Trailer: </span></h2>
                         </div>
                         <div class="entry-content htmlwrap clearfix">
                             <div class="video-item halim-entry-box">
-                                <article id="post-38424" class="item-content">
+                                <article class="item-content">
                                     <iframe width="100%" height="415"
                                         src="https://www.youtube.com/embed/{{ $movie->trailer }}"
                                         title="YouTube video player" frameborder="0"
@@ -157,6 +163,22 @@
                                 @else
                                     {{ $movie->title }}
                                 @endif
+                            </article>
+                        </div>
+                    </div>
+
+                    <div>
+                        @php
+                            $current_url = Request::url();
+                            echo $current_url;
+                        @endphp
+                    </div>
+
+                    <div style="background: white;" class="entry-content htmlwrap clearfix">
+                        <div class="video-item halim-entry-box">
+                            <article id="post-38424" class="item-content">
+                                <div class="fb-comments" data-href="http://127.0.0.1:8000/phim/ma-tran-hoi-sinh"
+                                data-order-by="reverse_time" data-width="100%" loading="lazy" data-numposts="5"></div>
                             </article>
                         </div>
                     </div>

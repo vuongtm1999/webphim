@@ -67,13 +67,19 @@
                             <form id="search-form-pc" name="halimForm" role="search" action="" method="GET">
                                 <div class="form-group">
                                     <div class="input-group col-xs-12">
-                                        <input id="search" type="text" name="s" class="form-control"
-                                            placeholder="Tìm kiếm..." autocomplete="off" required>
-                                        <i class="animate-spin hl-spin4 hidden"></i>
+                                       <form action="{{ route('search') }}" method="GET">
+                                            <input id="tim-kiem" type="text" name="search" class="form-control"
+                                                placeholder="Tìm kiếm..." autocomplete="off" required>
+                                            
+                                            <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                                            <i class="animate-spin hl-spin4 hidden"></i>
+                                       </form>
                                     </div>
                                 </div>
                             </form>
-                            <ul class="ui-autocomplete ajax-results hidden"></ul>
+                            <ul id="result" class="ui-autocomplete ajax-results hidden">
+
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -199,10 +205,61 @@
     <script type='text/javascript' src='{{ asset('js/bootstrap.min.js?ver=5.7.2') }}' id='bootstrap-js'></script>
     <script type='text/javascript' src='{{ asset('js/owl.carousel.min.js?ver=5.7.2') }}' id='carousel-js'></script>
 
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v17.0"
+        nonce="IrqelQt7"></script>
+
     <script type='text/javascript' src='{{ asset('js/halimtheme-core.min.js?ver=1626273138') }}' id='halim-init-js'>
     </script>
 
     <script type='text/javascript'>
+        $('#tim-kiem').keyup(function(e) {
+            $('#result').html('');
+            var keyword = $('#tim-kiem').val();
+
+            if (keyword) {
+                var expression = new RegExp(keyword, 'i');
+                $.getJSON('/json_files/movies.json', function(data) {
+                    $.each(data, function(i, value) {
+                        if (value.title.search(expression) != -1 ||
+                            value.description.search(expression) != -1) {
+                            $('#result').removeClass('hidden');
+                            $('#result').append(`
+                                            <li class="list-group-item" style="cursor:pointer">
+                                               <div style="display:flex;">
+                                                    <img height="200" width="500" src="{{ asset('/uploads/movie/${value.image}') }}"  >
+                                                    <div> 
+                                                        <div><strong>${value.title} |</strong></div>
+                                                        <span class="line_5">${value.description}</span>
+                                                    </div>
+                                                </div>
+                                            </li>`);
+                        }
+                    });
+                });
+            }
+        });
+
+        $('#result').on('click', 'li', function() {
+            var click_text = $(this).text().split('|');
+
+            $('#tim-kiem').val($.trim(click_text[0]));
+
+            $('#result').addClass('hidden');
+        });
+
+
+
+
+        $('.watch-trailer-btn').click(function(e) {
+            e.preventDefault();
+            var id = $(this).attr('href');
+
+            $('html,body').animate({
+                scrollTop: $(id).offset().top - 100
+            }, 'slow');
+        })
+
         $(document).ready(function() {
             $.ajax({
                 url: "{{ url('/filter-top-view-phim') }}",
@@ -250,6 +307,14 @@
     </script>
 
     <style>
+        .line_5 {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 5;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+        }
+
         #overlay_mb {
             position: fixed;
             display: none;

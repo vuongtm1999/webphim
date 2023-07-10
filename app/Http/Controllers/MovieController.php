@@ -8,6 +8,7 @@ use App\Models\Movie;
 use App\Models\Country;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use File;
 
 class MovieController extends Controller
 {
@@ -19,6 +20,14 @@ class MovieController extends Controller
     public function index()
     {
         $list = Movie::with('category','genre','country')->orderBy('id','DESC')->get();
+
+        $path = public_path(). '/json_files/';
+        if(!is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
+
+        File::put($path.'movies.json', json_encode($list));
+        
         return view('admincp.movie.index', compact('list'));
     }
 
@@ -64,7 +73,7 @@ class MovieController extends Controller
             }
 
             $output.= '
-                        <div id="halim-ajax-popular-post" class="popular-post">
+                        <div id="halim-ajax-popular-post" style="margin-bottom: 0;" class="popular-post">
                             <div class="item post-37176">
                                 <a href="'.url('phim/'.$mov->slug).'" title="'.$mov->title.'">
                                     <div class="item-link">
